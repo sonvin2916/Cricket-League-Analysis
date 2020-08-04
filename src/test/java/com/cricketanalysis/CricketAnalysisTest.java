@@ -15,7 +15,7 @@ public class CricketAnalysisTest {
         try {
             int numOfRecords = cricketAnalysis.loadBatsmanData(IPL_BATSMAN_CSV_DATA_FILE_PATH);
             Assert.assertEquals(100,numOfRecords);
-        } catch (CSVBuilderException e) { }
+        } catch (Exception e) { }
 
     }
     @Test
@@ -39,6 +39,30 @@ public class CricketAnalysisTest {
             double runs = censusCsv[0].Avg;
             String name = censusCsv[0].getPLAYER();
             Assert.assertEquals("Ishant Sharma", name);
+        } catch (Exception e) {
+        }
+    }
+    @Test
+    public void givenCricketData_WhenSorted_ShouldReturnMaximumFours(){
+        try {
+            cricketAnalysis.loadBatsmanData(IPL_BATSMAN_CSV_DATA_FILE_PATH);
+            String sortedCensusData = cricketAnalysis.getMaximumFours();
+            IPLBatsman[] censusCsv = new Gson().fromJson(sortedCensusData, IPLBatsman[].class);
+            String runs = censusCsv[0].fours;
+            String name = censusCsv[0].getPLAYER();
+            Assert.assertEquals("Shikhar Dhawan", name);
+        } catch (Exception e) {
+        }
+    }
+    @Test
+    public void givenCricketData_WhenSorted_ShouldReturnMaximumSixs(){
+        try {
+            cricketAnalysis.loadBatsmanData(IPL_BATSMAN_CSV_DATA_FILE_PATH);
+            String sortedCensusData = cricketAnalysis.getMaximumSixs();
+            IPLBatsman[] censusCsv = new Gson().fromJson(sortedCensusData, IPLBatsman[].class);
+            String runs = censusCsv[0].sixs;
+            String name = censusCsv[0].getPLAYER();
+            Assert.assertEquals("Andre Russell", name);
         } catch (Exception e) {
         }
     }

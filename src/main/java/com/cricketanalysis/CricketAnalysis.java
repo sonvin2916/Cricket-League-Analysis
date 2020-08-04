@@ -51,6 +51,24 @@ public class CricketAnalysis {
         String sortedCensusJson = new Gson().toJson(censusCSVList);
         return sortedCensusJson;
     }
+    public String getMaximumFours() {
+        if(censusCSVList.size()==0 || censusCSVList==null)
+            throw new CSVBuilderException("No Census Data", CSVBuilderException.ExceptionType.NO_CENSUS_DATA);
+        Comparator<IPLBatsman> sortedMaximumFours = Comparator.comparing(census -> census.fours);
+        this.sort(sortedMaximumFours);
+        String sortedCensusJson = new Gson().toJson(censusCSVList);
+        return sortedCensusJson;
+
+    }
+    public String getMaximumSixs() {
+        if(censusCSVList.size()==0 || censusCSVList==null)
+            throw new CSVBuilderException("No Census Data", CSVBuilderException.ExceptionType.NO_CENSUS_DATA);
+        Comparator<IPLBatsman> sortedMaximumSixs = Comparator.comparing(census -> census.sixs);
+        this.sort(sortedMaximumSixs);
+        String sortedCensusJson = new Gson().toJson(censusCSVList);
+        return sortedCensusJson;
+    }
+
     private void sort(Comparator<IPLBatsman> iplMostRunsComparator) {
         for (int i = 0; i < censusCSVList.size() - 1; i++) {
             for (int j = 0; j < censusCSVList.size() - i - 1; j++) {
@@ -64,6 +82,7 @@ public class CricketAnalysis {
             }
         }
     }
+
 
 
 }
