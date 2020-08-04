@@ -121,6 +121,33 @@ public class CricketAnalysis {
         String sortedCensusJson = new Gson().toJson(wicketsList);
         return sortedCensusJson;
     }
+    public String getBestEconomyWiseSortedData() {
+        if(wicketsList.size()==0 || wicketsList==null)
+            throw new CSVBuilderException("No Census Data", CSVBuilderException.ExceptionType.NO_CENSUS_DATA);
+        Comparator<IPLWickets> iplEconomy= Comparator.comparing(census -> census.Econ);
+        this.sortWickets(iplEconomy);
+        String sortedCensusJson = new Gson().toJson(wicketsList);
+        return sortedCensusJson;
+    }
+    public String getWicketsWithBestStrikingRate4wWiseSorted() {
+        if(wicketsList.size()==0 || wicketsList==null)
+            throw new CSVBuilderException("No Census Data", CSVBuilderException.ExceptionType.NO_CENSUS_DATA);
+        Comparator<IPLWickets> iplMostWicketsComparator = Comparator.comparing(census -> census.FourWickets);
+        this.sortWickets(iplMostWicketsComparator);
+        String sortedCensusJson = new Gson().toJson(wicketsList);
+        return sortedCensusJson;
+    }
+    public String getWicketsWithBestStrikingRate5wWiseSorted() {
+        if(wicketsList.size()==0 || wicketsList==null)
+            throw new CSVBuilderException("No Census Data", CSVBuilderException.ExceptionType.NO_CENSUS_DATA);
+        Comparator<IPLWickets> iplMostWicketsComparator = Comparator.comparing(census -> census.FiveWickets);
+        this.sortWickets(iplMostWicketsComparator);
+        String sortedCensusJson = new Gson().toJson(wicketsList);
+        return sortedCensusJson;
+    }
+
+
+
 
     private void sortWickets(Comparator<IPLWickets> iplMostWicketsComparator) {
         for (int i = 0; i < wicketsList.size()-1; i++){
@@ -148,8 +175,6 @@ public class CricketAnalysis {
             }
         }
     }
-
-
 }
 
 

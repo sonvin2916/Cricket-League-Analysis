@@ -133,6 +133,43 @@ public class CricketAnalysisTest {
         } catch (Exception e) {
         }
     }
+    @Test
+    public void givenWicketData_WhenSorted_ShouldReturnSortedWithBestEconomy() {
+        try {
+            cricketAnalysis.loadDataForWickets(IPL_WICKET_CSV_DATA_FILE_PATH);
+            String sortedCensusData = cricketAnalysis.getBestEconomyWiseSortedData();
+            IPLWickets[] censusCsv = new Gson().fromJson(sortedCensusData, IPLWickets[].class);
+            String name = censusCsv[0].getPLAYER();
+            Assert.assertEquals("Ben Cutting", name);
+        } catch (Exception e) {
+        }
+    }
+    @Test
+    public void givenWicketData_WhenSorted_ShouldReturnSortedWithStrikeRate4w() {
+        try {
+            cricketAnalysis.loadDataForWickets(IPL_WICKET_CSV_DATA_FILE_PATH);
+            String sortedCensusData = cricketAnalysis.getWicketsWithBestStrikingRate4wWiseSorted();
+            IPLWickets[] censusCsv = new Gson().fromJson(sortedCensusData, IPLWickets[].class);
+            String runs = censusCsv[0].FourWickets;
+            String name = censusCsv[0].getPLAYER();
+            Assert.assertEquals("Imran Tahir", name);
+        } catch (Exception e) {
+        }
+    }
+    @Test
+    public void givenWicketData_WhenSorted_ShouldReturnSortedWithStrikeRate5w() {
+        try {
+            cricketAnalysis.loadDataForWickets(IPL_WICKET_CSV_DATA_FILE_PATH);
+            String sortedCensusData = cricketAnalysis.getWicketsWithBestStrikingRate5wWiseSorted();
+            IPLWickets[] censusCsv = new Gson().fromJson(sortedCensusData, IPLWickets[].class);
+            String runs = censusCsv[0].FiveWickets;
+            String name = censusCsv[0].getPLAYER();
+            Assert.assertEquals("Alzarri Joseph", name);
+        } catch (Exception e) {
+        }
+    }
+
+
 
 
 }
