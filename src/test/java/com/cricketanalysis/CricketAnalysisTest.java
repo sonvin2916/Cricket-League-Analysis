@@ -122,6 +122,17 @@ public class CricketAnalysisTest {
         } catch (Exception e) {
         }
     }
+    @Test
+    public void givenWicketData_WhenSorted_ShouldReturnSortedWithStrikeRate() {
+        try {
+            cricketAnalysis.loadDataForWickets(IPL_WICKET_CSV_DATA_FILE_PATH);
+            String sortedCensusData = cricketAnalysis.getBestStrikingRateWiseSorted();
+            IPLWickets[] censusCsv = new Gson().fromJson(sortedCensusData, IPLWickets[].class);
+            String name = censusCsv[0].getPLAYER();
+            Assert.assertEquals("Krishnappa Gowtham", name);
+        } catch (Exception e) {
+        }
+    }
 
 
 }
