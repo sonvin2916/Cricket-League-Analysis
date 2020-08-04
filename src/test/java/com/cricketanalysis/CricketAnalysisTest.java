@@ -89,6 +89,18 @@ public class CricketAnalysisTest {
         } catch (Exception e) {
         }
     }
+    @Test
+    public void givenCricketData_WhenSorted_ShouldReturnSortedRunsWithBestAvg() {
+        try {
+            cricketAnalysis.loadBatsmanData(IPL_BATSMAN_CSV_DATA_FILE_PATH);
+            String sortedCensusData = cricketAnalysis.getBestAverageWithRunsWiseSorted();
+            IPLBatsman[] censusCsv = new Gson().fromJson(sortedCensusData, IPLBatsman[].class);
+            String runs = censusCsv[0].Runs;
+            String name = censusCsv[0].getPLAYER();
+            Assert.assertEquals("David Warner", name);
+        } catch (Exception e) {
+        }
+    }
 
 
 }
