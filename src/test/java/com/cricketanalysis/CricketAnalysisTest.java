@@ -78,6 +78,17 @@ public class CricketAnalysisTest {
         } catch (Exception e) {
         }
     }
+    @Test
+    public void givenCricketData_WhenSorted_ShouldReturnSortedAverageWithBestSR() {
+        try {
+            cricketAnalysis.loadBatsmanData(IPL_BATSMAN_CSV_DATA_FILE_PATH);
+            String sortedCensusData = cricketAnalysis.getAverageWithBestSRWiseSorted();
+            IPLBatsman[] censusCsv = new Gson().fromJson(sortedCensusData, IPLBatsman[].class);
+            String name = censusCsv[0].getPLAYER();
+            Assert.assertEquals("MS Dhoni", name);
+        } catch (Exception e) {
+        }
+    }
 
 
 }
