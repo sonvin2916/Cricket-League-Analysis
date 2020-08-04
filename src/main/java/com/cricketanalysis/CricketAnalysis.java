@@ -43,6 +43,14 @@ public class CricketAnalysis {
         String sortedCensusJson = new Gson().toJson(censusCSVList);
         return sortedCensusJson;
     }
+    public String getTopStrikingRates() {
+        if(censusCSVList.size()==0 || censusCSVList==null)
+            throw new CSVBuilderException("No Census Data", CSVBuilderException.ExceptionType.NO_CENSUS_DATA);
+        Comparator<IPLBatsman> sortedStrikingRate = Comparator.comparing(census -> census.SR);
+        this.sort(sortedStrikingRate);
+        String sortedCensusJson = new Gson().toJson(censusCSVList);
+        return sortedCensusJson;
+    }
     private void sort(Comparator<IPLBatsman> iplMostRunsComparator) {
         for (int i = 0; i < censusCSVList.size() - 1; i++) {
             for (int j = 0; j < censusCSVList.size() - i - 1; j++) {
@@ -56,6 +64,8 @@ public class CricketAnalysis {
             }
         }
     }
+
+
 }
 
 
