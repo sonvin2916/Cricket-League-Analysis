@@ -9,6 +9,7 @@ import java.io.IOException;
 public class CricketAnalysisTest {
     CricketAnalysis cricketAnalysis;
     private static final  String IPL_BATSMAN_CSV_DATA_FILE_PATH="./src/test/resources/Data_01 IPL2019FactsheetMostRuns";
+    private static final  String IPL_WICKET_CSV_DATA_FILE_PATH="./src/test/resources/Data_02 IPL2019FactsheetMostWkts";
 
     @Test
     public void  givenBatsmanCSVFile_WhenPassedCorrect_ShouldReturnCorrectRecords() throws IOException {
@@ -98,6 +99,26 @@ public class CricketAnalysisTest {
             String runs = censusCsv[0].Runs;
             String name = censusCsv[0].getPLAYER();
             Assert.assertEquals("David Warner", name);
+        } catch (Exception e) {
+        }
+    }
+    @Test
+    public void givenWicketCSVFile_WhenPassedCorrect_ShouldReturnCorrectRecords() {
+        try {
+            int numOfRecords = cricketAnalysis.loadDataForWickets(IPL_WICKET_CSV_DATA_FILE_PATH);
+            Assert.assertEquals(99, numOfRecords);
+        } catch (Exception e) {
+        }
+    }
+    @Test
+    public void givenWicketData_WhenSorted_ShouldReturnSortedWithTopBowlingAvg() {
+        try {
+            cricketAnalysis.loadDataForWickets(IPL_WICKET_CSV_DATA_FILE_PATH);
+            String sortedCensusData = cricketAnalysis.getAverageBowlingWiseSortedForWickets();
+            IPLWickets[] censusCsv = new Gson().fromJson(sortedCensusData, IPLWickets[].class);
+            String runs = censusCsv[0].Avg;
+            String name = censusCsv[0].getPLAYER();
+            Assert.assertEquals("Krishnappa Gowtham", name);
         } catch (Exception e) {
         }
     }

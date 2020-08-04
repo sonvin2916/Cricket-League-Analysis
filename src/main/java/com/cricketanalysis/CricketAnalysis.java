@@ -19,6 +19,7 @@ import java.util.List;
 
 public class CricketAnalysis {
     List<IPLBatsman> censusCSVList = null;
+    List<IPLWickets> wicketsList = null;
 
     public int loadBatsmanData(String csvFilePath) throws IOException {
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
@@ -32,6 +33,18 @@ public class CricketAnalysis {
             throw new CSVBuilderException(e.getMessage(), CSVBuilderException.ExceptionType.INCORRECT_FILE);
         }
 
+    }
+    public int loadDataForWickets(String csvFilePath) {
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
+            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+            censusCSVList = csvBuilder.getCSVFileList(reader, IPLWickets.class);
+            System.out.println(censusCSVList);
+            return censusCSVList.size();
+        } catch (IOException e) {
+            throw new CSVBuilderException(e.getMessage(), CSVBuilderException.ExceptionType.FILE_NOT_FOUND);
+        } catch (RuntimeException e) {
+            throw new CSVBuilderException(e.getMessage(), CSVBuilderException.ExceptionType.INCORRECT_FILE);
+        }
     }
 
 
@@ -92,7 +105,27 @@ public class CricketAnalysis {
         String sortedCensusJson = new Gson().toJson(censusCSVList);
         return sortedCensusJson;
     }
+    public String getAverageBowlingWiseSortedForWickets() {
+        if(wicketsList.size()==0 || wicketsList==null)
+            throw new CSVBuilderException("No Census Data", CSVBuilderException.ExceptionType.NO_CENSUS_DATA);
+        Comparator<IPLWickets> iplMostWicketsComparator = Comparator.comparing(census -> census.Avg);
+        this.sortWickets(iplMostWicketsComparator);
+        String sortedCensusJson = new Gson().toJson(wicketsList);
+        return sortedCensusJson;
+    }
 
+    private void sortWickets(Comparator<IPLWickets> iplMostWicketsComparator) {
+        for (int i = 0; i < wicketsList.size()-1; i++){
+            for (int j=0; j < wicketsList.size()-i-1; j++){
+                IPLWickets census1 = wicketsList.get(j);
+                IPLWickets census2 = wicketsList.get(j+1);
+                if (iplMostWicketsComparator.compare(census1,census2)<0){
+                    wicketsList.set(j,census2);
+                    wicketsList.set(j+1,census1);
+                }
+            }
+        }
+    }
 
     private void sort(Comparator<IPLBatsman> iplMostRunsComparator) {
         for (int i = 0; i < censusCSVList.size() - 1; i++) {
@@ -107,8 +140,6 @@ public class CricketAnalysis {
             }
         }
     }
-
-
 
 }
 
